@@ -1,4 +1,6 @@
 #include "Game.h"
+#include "Game_error.h"
+#include <iostream>
 
 Game::Game()
 {
@@ -13,7 +15,7 @@ Game::~Game()
 void
 Game::init()
 {
-    if(SDL_Init(SDL_INIT_VIDEO) < 0) throw Game_init_fail();
+    if(SDL_Init(SDL_INIT_VIDEO) < 0) throw Game_init_fail("Unable to initialize SDL");
 
 }
 
@@ -52,6 +54,7 @@ Game::exec()
             render();
         }
     }catch(std::exception& e){
+        std::cerr << "FATAL ERROR : " << e.what() << std::endl;
         cleanUp();
     }
     cleanUp();
